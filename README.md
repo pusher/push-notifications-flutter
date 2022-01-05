@@ -111,8 +111,14 @@ import 'package:pusher_beams/pusher_beams.dart';
 
 void main() async {
   // Some initial code
-  // Maybe the firebase initialization...
   
+  // Example Firebase initialization
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  
+  // PusherBeams initialization
   await PusherBeams.instance.start('YOUR INSTANCE ID');
 }
 ```
