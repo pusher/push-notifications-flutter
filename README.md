@@ -107,6 +107,8 @@ flutter pub add pusher_beams
 
 In order to initialize Pusher Beams, you already have initialized Firebase ([FlutterFire](https://firebase.flutter.dev/)), now you can initialize Pusher Beams using the `start` method as soon as possible (Preferable inside the `main` function).
 ```dart
+import 'package:pusher_beams/pusher_beams.dart';
+
 void main() async {
   // Some initial code
   // Maybe the firebase initialization...
