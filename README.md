@@ -67,8 +67,8 @@ This plugin supports Web, Android and iOS platforms.
 
 ### Mobile Support
 
-- iOS 10 and above
-- Android 4.4 and above (>= SDK Version 19)
+- _iOS 10_ and above
+- _Android 4.4_ and above (>= SDK Version 19)
 
 ## Example
 A fully example using this plugin can be found in this repository, implementing a basic use of most of the functionality included in this plugin.
@@ -76,42 +76,89 @@ A fully example using this plugin can be found in this repository, implementing 
 [See Example](https://github.com/pusher/flutter_pusher_beams/tree/master/packages/pusher_beams/example)
 
 ## Prerequisites
-In order to install this plugin, you must:
-
-- Install [firebase_core](https://pub.dev/packages/firebase_core) package from [FlutterFire](https://firebase.flutter.dev/). ([See details](https://firebase.flutter.dev/docs/overview#installation))
-- Install [firebase_messaging](https://pub.dev/packages/firebase_messaging) package from [FlutterFire](https://firebase.flutter.dev/). ([See details](https://firebase.flutter.dev/docs/messaging/overview#installation))
-- Follow the instructions to initialize and configure Firebase on your Flutter application. ([See Details](https://firebase.flutter.dev/docs/overview#initializing-flutterfire)).
-  - If you're installing this plugin within a fresh Flutter Application, you might use the [CLI initialization](https://firebase.flutter.dev/docs/cli)
-  - If you're already using FlutterFire before the [dart-only initialization](https://firebase.flutter.dev/docs/overview#initializing-flutterfire), you may want to [migrate to dart-only](https://firebase.flutter.dev/docs/manual-installation#migrating-to-dart-only-initialization).
-  
-**Note: You may skip this if you have already installed [FlutterFire](https://firebase.flutter.dev/) and you're implementing [firebase_messaging](https://pub.dev/packages/firebase_messaging)** on your Flutter application.
+In order to work with this _Flutter_ plugin you must have a [Pusher Beams Account](https://pusher.com/beams) and already got an `instanceId` within your dashboard, you can [Sign Up here](https://dashboard.pusher.com/accounts/sign_up?product=beams).
 
 ### Android Additional
+- [Firebase Account](https://firebase.google.com/) and a `google-services.json` ([follow this guide](https://pusher.com/docs/beams/getting-started/android/sdk-integration/)). **Do not initialize anything**, this plugin just requires a `google-services.json` within your `android/app` folder.
 - [Enable Multidex](https://firebase.flutter.dev/docs/manual-installation/android#enabling-multidex) (If your `minSdkVersion` is lower than 21)
+- For Android 12 support,`compileSdkVersion` must be set to `31` (and if you use kotlin, use the `1.5.30` version)
 
 ### iOS Additional
-- [Setup iOS or macOS with Firebase Cloud Messaging](https://firebase.flutter.dev/docs/messaging/apple-integration) (You may want to read this)
+- [Enable capabilities within your iOS app.](https://pusher.com/docs/beams/getting-started/ios/sdk-integration/#enable-capabilities)
+- [Configure APNs](https://pusher.com/docs/beams/getting-started/ios/configure-apns/) in order to work with iOS platform.
 
 ## Installation
 To install this plugin within you Flutter application, you need to add the package into your `pubspec.yaml`.
 ```yaml
     dependencies:
-      pusher_beams: 1.0.0
+      pusher_beams: ^1.0.1
 ```
 or with `flutter pub`
 ```
 flutter pub add pusher_beams
 ```
 
+There are some additional steps for some platforms.
+
+### Android
+
+- Add this line inside your project-level `build.gradle` which is located at your `android` folder
+  ```
+  buildscript {
+      // Your config...
+      
+      repositories {
+          // Your repositories...
+      }
+  
+      dependencies {
+          // Your dependencies...
+  
+          // Add this line
+          classpath 'com.google.gms:google-services:4.2.0'
+      }
+  }
+  ```
+
+- Now, on your app-level `build.gradle` you must include `com.google.gms.google-services` ( `google-services.json` must be already included within your app as it's a [prerequisite](#prerequisites)). Just add this line at the end of your app-level `build.gradle`.
+  ```
+  apply plugin: 'com.google.gms.google-services'
+  ```
+
+### Web
+
+- Create a file called `service-worker.js` inside your `web` folder.
+- That file must include the following line:
+  ```js
+  importScripts("https://js.pusher.com/beams/service-worker.js");
+  ```
+- Now you must add this `<script>` tag inside and **at the beginning** of your `<body>` tag within the `web/index.html` file:
+  ```html
+  <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
+  ```
+
 ## Initialization
 
-In order to initialize Pusher Beams, you already have initialized Firebase ([FlutterFire](https://firebase.flutter.dev/)), now you can initialize Pusher Beams using the `start` method as soon as possible (Preferable inside the `main` function).
+If you already have done the [prerequisites](#prerequisites), now you can initialize _Pusher Beams_ using the `start` method as soon as possible (Preferable inside the `main` function).
 ```dart
 void main() async {
   // Some initial code
-  // Maybe the firebase initialization...
   
   await PusherBeams.instance.start('YOUR INSTANCE ID');
+  
+  runApp(MyApp());
+}
+```
+
+Ensure the bindings are initialized, you can do this by adding the following line inside your `main` function **before you start this plugin**.
+```dart
+void main() async {
+  // Some initial code
+
+  WidgetsFlutterBinding.ensureInitialized(); // Add this line
+  await PusherBeams.instance.start('YOUR INSTANCE ID');
+
+  runApp(MyApp());
 }
 ```
 
