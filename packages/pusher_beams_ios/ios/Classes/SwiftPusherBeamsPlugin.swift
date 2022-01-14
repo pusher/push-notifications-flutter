@@ -8,6 +8,8 @@ public class SwiftPusherBeamsPlugin: NSObject, FlutterPlugin, PusherBeamsApi, In
     
     var interestsDidChangeCallback : String? = nil
     var beamsClient : PushNotifications?
+    var started : Bool = false
+    var deviceToken : Data? = nil
 
     public static func register(with registrar: FlutterPluginRegistrar) {
         let messenger : FlutterBinaryMessenger = registrar.messenger()
@@ -21,13 +23,17 @@ public class SwiftPusherBeamsPlugin: NSObject, FlutterPlugin, PusherBeamsApi, In
     }
     
     public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        PushNotifications.shared.registerDeviceToken(deviceToken)
+        if(started) {
+            beamsClient?.registerDeviceToken(deviceToken)
+        } else {
+            self.deviceToken = deviceToken
+        }
     }
 
     private func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         PushNotifications.shared.handleNotification(userInfo: userInfo)
     }
-    
+
     private func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         PushNotifications.shared.registerForRemoteNotifications()
         return true
@@ -36,6 +42,14 @@ public class SwiftPusherBeamsPlugin: NSObject, FlutterPlugin, PusherBeamsApi, In
     public func startInstanceId(_ instanceId: String, error: AutoreleasingUnsafeMutablePointer<FlutterError?>) {
         beamsClient = PushNotifications(instanceId: instanceId)
         beamsClient?.delegate = self
+
+        beamsClient?.start()
+
+        if(deviceToken != nil) {
+            beamsClient?.registerDeviceToken(deviceToken!)
+            deviceToken = nil
+        }
+        started = true
     }
 
     public func addDeviceInterestInterest(_ interest: String, error: AutoreleasingUnsafeMutablePointer<FlutterError?>) {
@@ -101,5 +115,6 @@ public class SwiftPusherBeamsPlugin: NSObject, FlutterPlugin, PusherBeamsApi, In
         beamsClient!.stop {
             print("SwiftPusherBeamsPlugin: stopped")
         }
+        started = false
     }
 }

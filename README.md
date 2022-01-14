@@ -1,4 +1,7 @@
+⚠️ Please note this SDK is currently being tested and is not yet production ready.
+
 # Pusher Beams for Flutter
+
 ![Pub Version](https://img.shields.io/pub/v/pusher_beams)
 ![GitHub](https://img.shields.io/github/license/pusher/flutter_pusher_beams)
 [![likes](https://badges.bar/pusher_beams/likes)](https://pub.dev/packages/pusher_beams/score)
@@ -11,6 +14,7 @@ Official Flutter Plugin for [Pusher Beams](https://pusher.com/beams) using [Pige
 - [Flutter](https://flutter.dev/) >= 2.x.x
 
 ## Table of Contents
+
 - [Architecture](#architecture)
 - [Flutter Support](#flutter-support)
 - [Platform Support](#platform-support)
@@ -30,6 +34,7 @@ Official Flutter Plugin for [Pusher Beams](https://pusher.com/beams) using [Pige
 
 
 ## Architecture
+
 This plugin was developed based on the [Federated Plugin Architecture](https://docs.google.com/document/d/1LD7QjmzJZLCopUrFAAE98wOUQpjmguyGTN2wd_89Srs/edit?usp=sharing), following packages are included in the plugin:
 
 - [pusher_beams](https://github.com/pusher/flutter_pusher_beams/tree/master/packages/pusher_beams): This is intended to be the main or _app-facing package_. **You must install this package in order to use it**.
@@ -39,6 +44,7 @@ This plugin was developed based on the [Federated Plugin Architecture](https://d
 - [pusher_beams_web](https://github.com/pusher/flutter_pusher_beams/tree/master/packages/pusher_beams_web): This is a _platform package_ which implements the Web code.
 
 ## Flutter Support
+
 This is the comparison table of functions implemented within this plugin according to the native libraries. ([Android](https://pusher.com/docs/beams/reference/android/), [iOS](https://pusher.com/docs/beams/reference/ios/), [Web](https://pusher.com/docs/beams/reference/web/))
 
 |                      | **iOS** | **Android** | **Web** |
@@ -55,9 +61,11 @@ This is the comparison table of functions implemented within this plugin accordi
 | [stop](https://pub.dev/documentation/pusher_beams/latest/pusher_beams/PusherBeams/stop.html)                 | ✅   | ✅       | ✅   |
 
 ## Platform Support
+
 This plugin supports Web, Android and iOS platforms.
 
 ### Web Support
+
 - Chrome (mobile & desktop)
 - Safari (mobile & desktop)
 - Edge (mobile & desktop)
@@ -71,23 +79,28 @@ This plugin supports Web, Android and iOS platforms.
 - _Android 4.4_ and above (>= SDK Version 19)
 
 ## Example
+
 A fully example using this plugin can be found in this repository, implementing a basic use of most of the functionality included in this plugin.
 
 [See Example](https://github.com/pusher/flutter_pusher_beams/tree/master/packages/pusher_beams/example)
 
 ## Prerequisites
+
 In order to work with this _Flutter_ plugin you must have a [Pusher Beams Account](https://pusher.com/beams) and already got an `instanceId` within your dashboard, you can [Sign Up here](https://dashboard.pusher.com/accounts/sign_up?product=beams).
 
 ### Android Additional
+
 - [Firebase Account](https://firebase.google.com/) and a `google-services.json` ([follow this guide](https://pusher.com/docs/beams/getting-started/android/sdk-integration/)). **Do not initialize anything**, this plugin just requires a `google-services.json` within your `android/app` folder.
 - [Enable Multidex](https://firebase.flutter.dev/docs/manual-installation/android#enabling-multidex) (If your `minSdkVersion` is lower than 21)
 - For Android 12 support,`compileSdkVersion` must be set to `31` (and if you use kotlin, use the `1.5.30` version)
 
 ### iOS Additional
+
 - [Enable capabilities within your iOS app.](https://pusher.com/docs/beams/getting-started/ios/sdk-integration/#enable-capabilities)
 - [Configure APNs](https://pusher.com/docs/beams/getting-started/ios/configure-apns/) in order to work with iOS platform.
 
 ## Installation
+
 To install this plugin within you Flutter application, you need to add the package into your `pubspec.yaml`.
 ```yaml
     dependencies:
@@ -169,6 +182,7 @@ Overall, that's all! ✨ Now you can use the methods described in the [API Refer
 If you want to see the API reference in-depth, you may want to see the [Official API Reference](https://pub.dev/documentation/pusher_beams/latest/) from [pub.dev](https://pub.dev/).
 
 ## Contributing
+
 In order to contribute you must first read [how to develop flutter plugins](https://docs.flutter.dev/development/packages-and-plugins/developing-packages#plugin), this is the basic knowledge to start.
 
 This repository is following [git flow branching model](https://nvie.com/posts/a-successful-git-branching-model/), so in order to contribute, once you fork this project, you must create a _fix/_ or _feature/_ branch, which will be pull requested from you once it's ready.
@@ -189,10 +203,12 @@ feat(android): i did something to android code :0
 ```
 
 ### Developing Environment
+
 - [Flutter](https://flutter.dev/) >= 2.x.x (running `flutter doctor` will check if everything is good to start)
 - To contribute on [packages/pusher_beams_ios](packages/pusher_beams_ios) you must be in MacOS and Xcode must be installed
 
 ### Running The Tests
+
 There's two major tests, our **app-facing package** test which is run as [Integration Test](https://docs.flutter.dev/testing/integration-tests) and our **platform-interface package** test run as [Unit Test](https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html)
 
 #### Integration Tests
@@ -228,12 +244,14 @@ flutter drive \
 ```
 
 #### Unit Tests
+
 In order to run unit tests for [packages/pusher_beams_platform_interface](packages/pusher_beams_platform_interface) you must be in the directory and run the following:
 ```
 flutter test
 ```
 
 ### Pigeons
+
 As this plugin platform interface is generated by [Pigeon](https://pub.dev/packages/pigeon) and if you modified the file [messages.dart](packages/pusher_beams_platform_interface/pigeons/messages.dart) from [packages/pusher_beams_platform_interface](packages/pusher_beams_platform_interface) package, in order to generate a new `MethodChannel` interface you must run the following command on path `packages/pusher_beams_platform_interface`:
 ```
 make
