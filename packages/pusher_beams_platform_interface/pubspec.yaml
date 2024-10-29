@@ -5,7 +5,7 @@ repository: https://github.com/pusher/push-notifications-flutter
 issue_tracker: https://github.com/pusher/push-notifications-flutter/issues?q=is%3Aissue+is%3Aopen+label%3Ainterface
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: '>=3.0.0 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
