@@ -25,7 +25,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    namespace 'com.pusher.pusher_beams'
+    namespace = 'com.pusher.pusher_beams'
     compileSdkVersion 35
 
     compileOptions {
