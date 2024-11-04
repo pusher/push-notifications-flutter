@@ -15,7 +15,7 @@ dependencies:
   pusher_beams_web:
     git:
       url: https://github.com/KamrulIbnZaman/pusher-beams-notifications-flutter
-      path: packages/pusher_beams_android
+      path: packages/pusher_beams_web
       ref: master
   pusher_beams_android:
     git:
