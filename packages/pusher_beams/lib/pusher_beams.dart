@@ -333,7 +333,7 @@ class PusherBeams extends PusherBeamsPlatform with CallbackHandlerApi {
         callback((args[0] as List<Object?>).cast<String>());
         return;
       case "setUserId":
-        callback(args[0] as String?);
+        callback(args.isEmpty ? null : args[0] as String?);
         return;
       case "onMessageReceivedInTheForeground":
         callback((args[0] as Map<Object?, Object?>));
