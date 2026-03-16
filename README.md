@@ -155,9 +155,18 @@ There are some additional steps for some platforms.
 
 If you already have done the [prerequisites](#prerequisites), now you can initialize _Pusher Beams_ using the `start` method as soon as possible (Preferable inside the `main` function).
 ```dart
+import 'package:pusher_beams/pusher_beams.dart';
+
 void main() async {
   // Some initial code
   
+  // Example Firebase initialization
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  
+  // PusherBeams initialization
   await PusherBeams.instance.start('YOUR INSTANCE ID');
   
   runApp(MyApp());
